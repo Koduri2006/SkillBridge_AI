@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SkillBridge AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <h2>SkillBridge <span>AI</span></h2>
+        <p>Intelligent Career Assistant</p>
+    </header>
+
+    <main class="container">
+
+        <section class="hero">
+            <h1>Build Your Career With AI</h1>
+            <p>
+                Discover your skills, identify career gaps
+                and prepare yourself for your dream job.
+            </p>
+        </section>
+
+        <!-- Resume Analysis Section -->
+        <section class="resume-section">
+
+            <h2>AI Resume Analysis</h2>
+
+            <p>
+                Upload your resume in PDF format
+                to automatically identify your technical skills.
+            </p>
+
+            <form method="POST"
+                  action="/"
+                  enctype="multipart/form-data">
+
+                <input
+                    type="file"
+                    name="resume"
+                    accept=".pdf,application/pdf"
+                    required
+                >
+
+                <button type="submit">
+                    Analyze My Resume
+                </button>
+
+            </form>
+
+            {% if error %}
+                <div class="error-box">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            {% if analyzed %}
+
+                <div class="result-box">
+
+                    <h3>Resume Analysis Results</h3>
+
+                    {% if skills %}
+
+                        <h3>Detected Technical Skills</h3>
+
+                        <p>
+                            Here are the skills found in your resume:
+                        </p>
+
+                        {% for category, category_skills in skill_categories.items() %}
+
+                            <div class="category-box">
+
+                                <h4>{{ category }}</h4>
+
+                                <div class="skill-list">
+
+                                    {% for skill in category_skills %}
+
+                                        <span class="skill-tag">
+                                            {{ skill }}
+                                        </span>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                        <p class="result-count">
+                            Total skills detected: {{ skills|length }}
+                        </p>
+
+                    {% else %}
+
+                        <p>
+                            No skills from our current database
+                            were detected.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+        <!-- Project Features -->
+        <section class="features">
+
+            <div class="card">
+                <h3>Resume Analysis</h3>
+                <p>Analyze your resume and identify your skills.</p>
+            </div>
+
+            <div class="card">
+                <h3>Job Matching</h3>
+                <p>Discover jobs matching your skill set.</p>
+            </div>
+
+            <div class="card">
+                <h3>Skill Gap Analysis</h3>
+                <p>Identify missing skills for your target role.</p>
+            </div>
+
+            <div class="card">
+                <h3>AI Mock Interview</h3>
+                <p>Practice interviews and improve your answers.</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>SkillBridge AI | Career Intelligence Platform</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>
